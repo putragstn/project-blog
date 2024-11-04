@@ -87,9 +87,27 @@
                 <a class="link-secondary" href="#" aria-label="Search">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
                 </a>
-                <a class="btn btn-sm btn-outline-secondary" href="/login">Sign In</a>
-                <div class="opacity-0">0</div>
-                <a class="btn btn-sm btn-outline-secondary" href="/register">Sign up</a>
+
+                @if (Route::has('login'))
+                    @auth
+                        @if (auth()->user()->role === "superadmin")
+                            <a class="btn btn-sm btn-outline-secondary" href="/superadmin/dashboard">Dashboard</a>
+                        @elseif (auth()->user()->role === "admin")
+                            <a class="btn btn-sm btn-outline-secondary" href="/admin/dashboard">Dashboard</a>
+                        @elseif (auth()->user()->role === "user")
+                            <a class="btn btn-sm btn-outline-secondary" href="/user/dashboard">Dashboard</a>
+                        @else
+                            <a class="btn btn-sm btn-outline-secondary" href="/login">Sign In</a>
+                            <div class="opacity-0">0</div>
+                            <a class="btn btn-sm btn-outline-secondary" href="/register">Sign up</a>    
+                        @endif
+                    @else
+                        <a class="btn btn-sm btn-outline-secondary" href="/login">Sign In</a>
+                        <div class="opacity-0">0</div>
+                        <a class="btn btn-sm btn-outline-secondary" href="/register">Sign up</a>
+                    @endauth
+                @endif
+                
             </div>
         </div>
     </header>
