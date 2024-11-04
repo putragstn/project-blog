@@ -5,16 +5,33 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    @if (auth()->user()->role === "superadmin")
+                        <a href="{{ route('superadmin.dashboard') }}">
+                    @elseif (auth()->user()->role === "admin")
+                        <a href="{{ route('admin.dashboard') }}">
+                    @else
+                        <a href="{{ route('user.dashboard') }}">
+                    @endif
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                    @if (auth()->user()->role === "superadmin")
+                        <x-nav-link :href="route('superadmin.dashboard')" :active="request()->routeIs('superadmin.dashboard')">
+                            {{ __('Dashboard Superadmin') }}
+                        </x-nav-link>
+                    @elseif (auth()->user()->role === "admin")
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Dashboard Admin') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
+                            {{ __('Dashboard User') }}
+                        </x-nav-link>
+                    @endif
+                        
                 </div>
             </div>
 

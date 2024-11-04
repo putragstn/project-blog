@@ -104,7 +104,7 @@
                                 </div> <!--end::Row-->
                             </li> <!--end::Menu Body--> <!--begin::Menu Footer-->
                             <li class="user-footer"> 
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="/profile" class="btn btn-default btn-flat">Profile</a>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <button class="btn btn-default btn-flat float-end">Sign out</button>
