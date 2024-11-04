@@ -97,14 +97,14 @@
                         @elseif (auth()->user()->role === "user")
                             <a class="btn btn-sm btn-outline-secondary" href="/user/dashboard">Dashboard</a>
                         @else
-                            <a class="btn btn-sm btn-outline-secondary" href="/login">Sign In</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="/login">Log In</a>
                             <div class="opacity-0">0</div>
-                            <a class="btn btn-sm btn-outline-secondary" href="/register">Sign up</a>    
+                            <a class="btn btn-sm btn-outline-secondary" href="/register">Register</a>    
                         @endif
                     @else
-                        <a class="btn btn-sm btn-outline-secondary" href="/login">Sign In</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="/login">Log In</a>
                         <div class="opacity-0">0</div>
-                        <a class="btn btn-sm btn-outline-secondary" href="/register">Sign up</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="/register">Register</a>
                     @endauth
                 @endif
                 
