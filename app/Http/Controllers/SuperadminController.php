@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 class SuperadminController extends Controller
 {
     public function dashboard(){
-        return view('superadmin.dashboard');
+        return view('user.dashboard', [
+          'title' => 'Superadmin Dashboard'
+        ]);
       }
 }
