@@ -31,7 +31,6 @@
                             {{ __('Dashboard User') }}
                         </x-nav-link>
                     @endif
-                        
                 </div>
             </div>
 
