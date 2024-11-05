@@ -9,11 +9,37 @@
                         <p>Dashboard</p>
                     </a> 
                 </li>
+                @if (auth()->user()->role === "superadmin" || auth()->user()->role === "admin")
+                    <li class="nav-item">
+                        <a href="#" class="nav-link"> <i class="nav-icon bi bi-people"></i>
+                            <p>User Management</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link"> <i class="nav-icon bi bi-postcard"></i>
+                            <p>All Posts</p>
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-item">
-                    <a href="#" class="nav-link"> <i class="nav-icon bi bi-pencil-square"></i>
+                    <a href="#" class="nav-link"> <i class="nav-icon bi bi-file-post"></i>
                         <p>My Posts</p>
                     </a>
                 </li>
+
+                @if (auth()->user()->role === "superadmin" || auth()->user()->role === "admin")
+                <li class="nav-item">
+                    <a href="#" class="nav-link"> <i class="nav-icon bi bi-tags"></i>
+                        <p>Categories</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link"> <i class="nav-icon bi bi-chat"></i>
+                        <p>Comments</p>
+                    </a>
+                </li>
+                @endif
+
                 <li class="nav-item">
                     <a href="/profile" class="nav-link"> <i class="nav-icon bi bi-lock"></i>
                         <p>Change Password</p>
