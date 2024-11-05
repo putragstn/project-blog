@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
 // superadmin routes
 Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function () {
     Route::get('/superadmin/dashboard',[SuperadminController::class,'dashboard'])->name('superadmin.dashboard');
+    Route::resource('/user-management', UserController::class);
 });
 
 
@@ -37,6 +38,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
     Route::get('/user/dashboard',[UserController::class,'dashboard'])->name('user.dashboard');
 });
+
+
 
 // Custom Route Not from Laravel Breeze
 // Route::group(['middleware'=>'role:superadmin,admin','prefix'=>'car', 'as'=>'car.'],function () {
