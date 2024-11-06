@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -12,7 +13,8 @@ class CategoryController extends Controller
     public function index()
     {
         return view('menu.category.index', [
-            'title' => 'Category'
+            'title'         => 'Category',
+            'categories'    => Category::all()
         ]);
     }
 
@@ -21,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        // Kode tidak dibutuhkan karena form input modal sudah ada di view
     }
 
     /**
@@ -29,7 +31,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'categories_name' => 'required|string|max:255',
+        ]);
+
+        // Menyimpan data kategori ke database
+        Category::create([
+            'categories_name' => $request->categories_name,
+        ]);
+
+        return redirect()->route('category.index')->with('success', 'Category added successfully!');
     }
 
     /**
@@ -45,7 +56,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return view('category.edit', compact('category'));
     }
 
     /**
@@ -53,7 +65,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'categories_name' => 'required|string|max:255',
+        ]);
+
+        $category = Category::findOrFail($id);
+        $category->update([
+            'categories_name' => $request->categories_name,
+        ]);
+
+        return redirect()->route('category.index')->with('success', 'Category updated successfully!');
     }
 
     /**
@@ -61,6 +82,9 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
+
+        return redirect()->route('category.index')->with('success', 'Category deleted successfully!');
     }
 }

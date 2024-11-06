@@ -6,10 +6,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Category;
 
 Route::get('/', function () {
     return view('home', [
-        'title' => 'Breaking News'
+        'title'         => 'Breaking News',
+        'categories'    => Category::all()
     ]);
 });
 
