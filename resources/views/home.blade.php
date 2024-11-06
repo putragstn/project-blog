@@ -94,12 +94,8 @@
                             <a class="btn btn-sm btn-outline-secondary" href="/superadmin/dashboard">Dashboard</a>
                         @elseif (auth()->user()->role === "admin")
                             <a class="btn btn-sm btn-outline-secondary" href="/admin/dashboard">Dashboard</a>
-                        @elseif (auth()->user()->role === "user")
-                            <a class="btn btn-sm btn-outline-secondary" href="/user/dashboard">Dashboard</a>
                         @else
-                            <a class="btn btn-sm btn-outline-secondary" href="/login">Log In</a>
-                            <div class="opacity-0">0</div>
-                            <a class="btn btn-sm btn-outline-secondary" href="/register">Register</a>    
+                            <a class="btn btn-sm btn-outline-secondary" href="/user/dashboard">Dashboard</a>
                         @endif
                     @else
                         <a class="btn btn-sm btn-outline-secondary" href="/login">Log In</a>
