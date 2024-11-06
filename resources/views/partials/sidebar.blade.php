@@ -20,7 +20,7 @@ if (auth()->user()->role === "superadmin"){
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                 
                 <li class="nav-item">
-                    <a href="{{ $url }}" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                    <a href="{{ $url }}" class="nav-link {{ request()->is('superadmin/dashboard*') || request()->is('admin/dashboard*') || request()->is('user/dashboard*')  ? 'active' : '' }}"> <i class="nav-icon bi bi-speedometer"></i>
                         <p>Dashboard</p>
                     </a> 
                 </li>
@@ -44,7 +44,7 @@ if (auth()->user()->role === "superadmin"){
 
                 @if (auth()->user()->role === "superadmin" || auth()->user()->role === "admin")
                 <li class="nav-item">
-                    <a href="/category" class="nav-link"> <i class="nav-icon bi bi-tags"></i>
+                    <a href="/category" class="nav-link {{ request()->is('category*') ? 'active' : '' }}"> <i class="nav-icon bi bi-tags"></i>
                         <p>Categories</p>
                     </a>
                 </li>

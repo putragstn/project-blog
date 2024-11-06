@@ -27,6 +27,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function () {
     Route::get('/superadmin/dashboard',[SuperadminController::class,'dashboard'])->name('superadmin.dashboard');
     // Route::resource('/user-management', UserController::class);
+    // Route::resource('category', CategoryController::class);
+});
+
+
+Route::middleware(['auth', 'verified', 'role:superadmin,admin'])->group(function () {
     Route::resource('category', CategoryController::class); 
 });
 
@@ -34,7 +39,7 @@ Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function () {
 // admin routes
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
-    Route::resource('category', CategoryController::class); 
+    // Route::resource('category', CategoryController::class); 
 });
 
 // user routes
