@@ -5,6 +5,7 @@ use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Category;
 
@@ -35,6 +36,7 @@ Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function () {
 
 Route::middleware(['auth', 'verified', 'role:superadmin,admin'])->group(function () {
     Route::resource('category', CategoryController::class); 
+    Route::resource('users', UserManagementController::class); 
 });
 
 

@@ -26,7 +26,7 @@ if (auth()->user()->role === "superadmin"){
                 </li>
                 @if (auth()->user()->role === "superadmin" || auth()->user()->role === "admin")
                     <li class="nav-item">
-                        <a href="#" class="nav-link"> <i class="nav-icon bi bi-people"></i>
+                        <a href="{{ route('users.index') }}" class="nav-link"> <i class="nav-icon bi bi-people"></i>
                             <p>User Management</p>
                         </a>
                     </li>
