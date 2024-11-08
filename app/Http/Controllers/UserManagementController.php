@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class UserManagementController extends Controller
 {
@@ -20,7 +21,7 @@ class UserManagementController extends Controller
     // Menampilkan form untuk membuat pengguna baru
     public function create()
     {
-        return view('users.create');
+        // Kode tidak dibutuhkan karena form input modal sudah ada di view
     }
 
     // Menyimpan pengguna baru
@@ -30,19 +31,44 @@ class UserManagementController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'role' => 'required|string|max:50',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,bmp,gif,svg|max:10240', // Validasi image
+            'password' => 'required|string|min:8',
         ]);
 
+        // Jika validasi gagal
         if ($validator->fails()) {
-            return redirect()->route('users.create')
+            return redirect()->route('users.index')
                              ->withErrors($validator)
                              ->withInput();
+        }
+
+        // Menangani upload file image
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+
+            // Ambil file gambar yang di-upload
+            $image = $request->file('image');
+
+            // Mendapatkan nama file asli
+            $filename = $image->getClientOriginalName(); // Misalnya 'image.png'
+
+            // Mendapatkan ekstensi file
+            $extension = $image->getClientOriginalExtension(); // Misalnya 'png'
+
+            // Menentukan path di storage/public tempat file disimpan
+            $path = $image->storeAs('img/users', $filename, 'public'); // Menyimpan di storage/app/public/images/users/
+
+            // Menyimpan path gambar pada database atau melanjutkan proses lainnya
+            $imagePath = $path;
         }
 
         // Simpan pengguna baru
         User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'role'  => $request->role,
+            'image' => $request->image,
             'password' => Hash::make($request->password), // Hash password
         ]);
 
