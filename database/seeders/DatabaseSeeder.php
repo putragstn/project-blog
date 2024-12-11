@@ -29,38 +29,67 @@ class DatabaseSeeder extends Seeder
             
             // superadmin
             [
-                'name' =>  'Superadmin',
-                'email' => 'superadmin@gmail.com',
+                'name'              => 'Superadmin',
+                'email'             => 'superadmin@gmail.com',
                 'email_verified_at' => now(),
-                'password' => static::$password ??= Hash::make('password'),
-                'role' => 'superadmin',
-                'remember_token' => Str::random(10),
-                'updated_at' => now(),
-                'created_at' => now()
+                'password'          => static::$password ??= Hash::make('password'),
+                'role'              => 'superadmin',
+                'remember_token'    => Str::random(10),
+                'status'            => 'verified',
+                'updated_at'        => now(),
+                'created_at'        => now()
             ],
             
             //admin
             [
-                'name' =>  'Admin',
-                'email' => 'admin@gmail.com',
+                'name'              => 'Admin',
+                'email'             => 'admin@gmail.com',
                 'email_verified_at' => now(),
-                'password' => static::$password ??= Hash::make('password'),
-                'role' => 'admin',
-                'remember_token' => Str::random(10),
-                'updated_at' => now(),
-                'created_at' => now()
+                'password'          => static::$password ??= Hash::make('password'),
+                'role'              => 'admin',
+                'remember_token'    => Str::random(10),
+                'status'            => 'verified',
+                'updated_at'        => now(),
+                'created_at'        => now()
             ],
 
             //user
             [
-                'name' =>  'User',
-                'email' => 'user@gmail.com',
+                'name'              => 'User',
+                'email'             => 'user@gmail.com',
                 'email_verified_at' => now(),
-                'password' => static::$password ??= Hash::make('password'),
-                'role' => 'user',
-                'remember_token' => Str::random(10),
-                'updated_at' => now(),
-                'created_at' => now()
+                'password'          => static::$password ??= Hash::make('password'),
+                'role'              => 'user',
+                'remember_token'    => Str::random(10),
+                'status'            => 'verified',
+                'updated_at'        => now(),
+                'created_at'        => now()
+            ],
+
+            // test - not verified
+            [
+                'name'              => 'Test',
+                'email'             => 'test@gmail.com',
+                'email_verified_at' => now(),
+                'password'          => static::$password ??= Hash::make('password'),
+                'role'              => 'user',
+                'remember_token'    => Str::random(10),
+                'status'            => 'not_verified',
+                'updated_at'        => now(),
+                'created_at'        => now()
+            ],
+
+            // user block
+            [
+                'name'              => 'Block',
+                'email'             => 'block@gmail.com',
+                'email_verified_at' => now(),
+                'password'          => static::$password ??= Hash::make('password'),
+                'role'              => 'user',
+                'remember_token'    => Str::random(10),
+                'status'            => 'block',
+                'updated_at'        => now(),
+                'created_at'        => now()
             ]
         ]);
     }
