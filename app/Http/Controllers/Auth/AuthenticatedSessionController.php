@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -38,14 +40,31 @@ class AuthenticatedSessionController extends Controller
         //     return redirect()->route('login')->with('status', 'You are not authorized to access this page.');
         // }
 
+        // Ambil data pengguna yang sedang login
+        $user = $request->user();
+
+        // Pengecekan status pengguna setelah login
+        if ($user->status === 'block') {
+            // Logout pengguna dan beri pesan jika statusnya 'block'
+            Auth::guard('web')->logout();
+            return redirect()->route('login')->with('status', 'Your account is blocked.');
+        }
+
+        if ($user->status === 'not_verified') {
+            // Logout pengguna dan beri pesan jika statusnya 'not_verified'
+            Auth::guard('web')->logout();
+            return redirect()->route('login')->with('status', 'Your account is not verified. Please check your email.');
+        }
+
+
         $url = "";
-        if($request->user()->role === "superadmin"){
+        if ($user->role === "superadmin") {
             $url = "/superadmin/dashboard";
-        } elseif($request->user()->role === "admin"){
+        } elseif ($user->role === "admin") {
             $url = "/admin/dashboard";
-        } elseif($request->user()->role === "user"){
+        } elseif ($user->role === "user") {
             $url = "/user/dashboard";
-        } else{
+        } else {
             $url = "/login"; 
         }
 
