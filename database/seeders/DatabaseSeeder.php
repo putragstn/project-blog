@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Category;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -91,6 +92,19 @@ class DatabaseSeeder extends Seeder
                 'updated_at'        => now(),
                 'created_at'        => now()
             ]
+        ]);
+
+
+
+        DB::table('categories')->insert([
+
+            [ 'categories_name' => 'Teknologi' ],
+            [ 'categories_name' => 'Military' ],
+            [ 'categories_name' => 'Psikologi' ],
+            [ 'categories_name' => 'Ekonomi' ],
+            [ 'categories_name' => 'Politik' ],
+            [ 'categories_name' => 'Sejarah' ],
+            [ 'categories_name' => 'Cyber Security' ]
         ]);
     }
 }
