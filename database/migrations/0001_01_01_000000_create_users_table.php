@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('image')->default('user_image.png');
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
+            $table->enum('status', ['block', 'not_verified', 'verified'])->default('not_verified');
             $table->rememberToken();
             $table->timestamps();
         });
