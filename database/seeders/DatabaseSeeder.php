@@ -98,13 +98,41 @@ class DatabaseSeeder extends Seeder
 
         DB::table('categories')->insert([
 
-            [ 'categories_name' => 'Teknologi' ],
-            [ 'categories_name' => 'Military' ],
-            [ 'categories_name' => 'Psikologi' ],
-            [ 'categories_name' => 'Ekonomi' ],
-            [ 'categories_name' => 'Politik' ],
-            [ 'categories_name' => 'Sejarah' ],
-            [ 'categories_name' => 'Cyber Security' ]
+            [ 
+                'categories_name' => 'Teknologi',
+                'updated_at'        => now(),
+                'created_at'        => now() 
+            ],
+            [ 
+                'categories_name' => 'Military',
+                'updated_at'        => now(),
+                'created_at'        => now() 
+            ],
+            [ 
+                'categories_name' => 'Psikologi',
+                'updated_at'        => now(),
+                'created_at'        => now() 
+            ],
+            [ 
+                'categories_name' => 'Ekonomi',
+                'updated_at'        => now(),
+                'created_at'        => now() 
+            ],
+            [ 
+                'categories_name' => 'Politik',
+                'updated_at'        => now(),
+                'created_at'        => now() 
+            ],
+            [ 
+                'categories_name' => 'Sejarah',
+                'updated_at'        => now(),
+                'created_at'        => now() 
+            ],
+            [ 
+                'categories_name' => 'Cyber Security',
+                'updated_at'        => now(),
+                'created_at'        => now() 
+            ]
         ]);
     }
 }
