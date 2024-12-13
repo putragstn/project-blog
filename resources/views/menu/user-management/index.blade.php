@@ -55,7 +55,7 @@
     <div class="container-fluid"> <!--begin::Row-->
         <div class="row"> <!--begin::Col-->
 
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card mb-4">
                     <div class="card-header">
                         <h3 class="card-title">User Table</h3>

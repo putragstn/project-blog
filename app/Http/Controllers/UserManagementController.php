@@ -50,11 +50,11 @@ class UserManagementController extends Controller
             // Ambil file gambar yang di-upload
             $image = $request->file('image');
 
-            // Mendapatkan nama file asli
-            $filename = $image->getClientOriginalName(); // Misalnya 'image.png'
+            // Mendapatkan nama file asli dengan tambahan waktu
+            $filename = time() . '.' . $image->getClientOriginalName(); // 
 
             // Mendapatkan ekstensi file
-            $extension = $image->getClientOriginalExtension(); // Misalnya 'png'
+            // $extension = $image->getClientOriginalExtension(); // Misalnya 'png'
 
             // Menentukan path di storage/public tempat file disimpan
             $path = $image->storeAs('img/users', $filename, 'public'); // Menyimpan di storage/app/public/images/users/
@@ -68,7 +68,7 @@ class UserManagementController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role'  => $request->role,
-            'image' => $request->image,
+            'image' => $filename,
             'password' => Hash::make($request->password), // Hash password
         ]);
 
