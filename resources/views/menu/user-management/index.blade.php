@@ -55,7 +55,7 @@
     <div class="container-fluid"> <!--begin::Row-->
         <div class="row"> <!--begin::Col-->
 
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card mb-4">
                     <div class="card-header">
                         <h3 class="card-title">User Table</h3>
@@ -78,6 +78,7 @@
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Image</th>
+                                    <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -89,6 +90,17 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->role }}</td>
                                     <td>{{ $user->image }}</td>
+                                    
+                                    <td class="text-center">
+                                        <span class="badge 
+                                            {{ $user->status == 'verified' ? 'text-bg-success' : 
+                                            ($user->status == 'not_verified' ? 'text-bg-warning' : 
+                                            ($user->status == 'block' ? 'text-bg-danger' : 'bg-secondary')) }}">
+                                            {{ $user->status }}
+                                        </span>
+                                    </td>
+
+
                                     <td class="text-center">
                                         <!-- <a href="{{ route('users.edit', $user->id) }}" data-bs-toggle="modal" data-bs-target="#editModal{{ $user->id }}"><span class="badge text-bg-primary"><i class="bi bi-pencil"></i></span></a> -->
 
@@ -119,19 +131,67 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route('users.update', $user->id) }}" method="POST">
+                                                <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="mb-3">
                                                         <label for="name" class="form-label">Name</label>
                                                         <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
                                                     </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="email" class="form-label">Email</label>
+                                                        <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}">
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="role" class="form-label">Role</label>
+                                                        <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" required>
+                                                            @php
+                                                                $roles = $user->role;
+                                                            @endphp
+
+                                                            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }} {{ $roles == 'user' ? 'selected' : '' }}>User</option>
+                                                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }} {{ $roles == 'admin' ? 'selected' : '' }}>Admin</option>
+                                                            <option value="superadmin" {{ old('role') == 'superadmin' ? 'selected' : '' }} {{ $roles == 'superadmin' ? 'selected' : '' }}>Superadmin</option>
+                                                        </select>
+                                                        @error('role')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+
+                                                    <!-- <div class="mb-3">
+                                                        <label for="image" class="form-label">Image</label>
+                                                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*" value="{{ $user->image }}">
+                                                        @error('image')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
+                                                    </div> -->
+
+                                                    <div class="mb-3">
+                                                        <label for="status" class="form-label">Status</label>
+                                                        <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
+                                                            @php
+                                                                $status = $user->status;
+                                                            @endphp
+
+                                                            <option value="verified" {{ old('status') == 'verified' ? 'selected' : '' }} {{ $status == 'verified' ? 'selected' : '' }}>Verified</option>
+                                                            <option value="not_verified" {{ old('status') == 'not_verified' ? 'selected' : '' }} {{ $status == 'not_verified' ? 'selected' : '' }}>Not Verified</option>
+                                                            <option value="block" {{ old('status') == 'block' ? 'selected' : '' }} {{ $status == 'block' ? 'selected' : '' }}>Block</option>
+                                                        </select>
+                                                        @error('status')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+
+
                                                     <button type="submit" class="btn btn-primary">Update User</button>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- End of Modal Edit -->
 
 
                                 <!-- Modal Delete (Konfirmasi) -->
@@ -200,13 +260,13 @@
                     <div class="mb-3">
                         <label for="role" class="form-label">Role</label>
                         <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" required>
-                                    <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
-                                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                    <option value="superadmin" {{ old('role') == 'superadmin' ? 'selected' : '' }}>Superadmin</option>
-                                </select>
-                                @error('role')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
+                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                            <option value="superadmin" {{ old('role') == 'superadmin' ? 'selected' : '' }}>Superadmin</option>
+                        </select>
+                        @error('role')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">

@@ -96,6 +96,7 @@ class DatabaseSeeder extends Seeder
 
 
 
+        // Tabel Category
         DB::table('categories')->insert([
 
             [ 

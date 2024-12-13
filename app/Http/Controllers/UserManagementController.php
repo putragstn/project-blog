@@ -96,11 +96,13 @@ class UserManagementController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-            'password' => 'nullable|string|min:8|confirmed', // Password bersifat opsional untuk update
+            'role' => 'required',
+            'status' => 'required'
         ]);
 
+        // jika validasinya gagal maka redirect ke form edit user
         if ($validator->fails()) {
-            return redirect()->route('users.edit', $id)
+            return redirect()->route('users.index', $id)
                              ->withErrors($validator)
                              ->withInput();
         }
@@ -108,11 +110,9 @@ class UserManagementController extends Controller
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
-
-        // Jika password diisi, maka update password
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-        }
+        $user->role = $request->role;
+        $user->status = $request->status;
+        
 
         $user->save();
 

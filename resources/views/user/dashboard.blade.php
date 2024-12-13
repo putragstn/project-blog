@@ -47,6 +47,8 @@
                         More info <i class="bi bi-link-45deg"></i> </a>
                 </div> <!--end::Small Box Widget 2-->
             </div> <!--end::Col-->
+
+            @if(auth()->user()->role === "superadmin" | auth()->user()->role === "admin")
             <div class="col-lg-3 col-6"> <!--begin::Small Box Widget 3-->
                 <div class="small-box text-bg-warning">
                     <div class="inner">
@@ -58,6 +60,7 @@
                         More info <i class="bi bi-link-45deg"></i> </a>
                 </div> <!--end::Small Box Widget 3-->
             </div> <!--end::Col-->
+            @endif
             <div class="col-lg-3 col-6"> <!--begin::Small Box Widget 4-->
                 <div class="small-box text-bg-danger">
                     <div class="inner">
