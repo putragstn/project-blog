@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UserManagementController extends Controller
@@ -50,26 +51,33 @@ class UserManagementController extends Controller
             // Ambil file gambar yang di-upload
             $image = $request->file('image');
 
-            // Mendapatkan nama file asli dengan tambahan waktu
-            $filename = time() . '.' . $image->getClientOriginalName(); // 
-
             // Mendapatkan ekstensi file
-            // $extension = $image->getClientOriginalExtension(); // Misalnya 'png'
+            $extension = $image->getClientOriginalExtension();
+
+            // Validasi ekstensi untuk memastikan hanya gambar yang di-upload
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            if (!in_array(strtolower($extension), $allowedExtensions)) {
+                // Jika file bukan gambar, beri respon error
+                return response()->json(['error' => 'Hanya file gambar yang diperbolehkan.'], 400);
+            }
+
+            // Membuat nama file unik dengan UUID dan ekstensi yang benar
+            $filename = Str::uuid() . '.' . $extension;
 
             // Menentukan path di storage/public tempat file disimpan
-            $path = $image->storeAs('img/users', $filename, 'public'); // Menyimpan di storage/app/public/images/users/
+            $image->storeAs('img/users', $filename, 'public'); // Menyimpan di storage/app/public/images/users/
 
             // Menyimpan path gambar pada database atau melanjutkan proses lainnya
-            $imagePath = $path;
+            $imagePath = $filename;
         }
 
         // Simpan pengguna baru
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role'  => $request->role,
-            'image' => $filename,
-            'password' => Hash::make($request->password), // Hash password
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'role'      => $request->role,
+            'image'     => $imagePath,     // Jika tidak ada gambar, akan disimpan sebagai null
+            'password'  => Hash::make($request->password), // Hash password
         ]);
 
         return redirect()->route('users.index')->with('success', 'User created successfully!');
@@ -85,46 +93,82 @@ class UserManagementController extends Controller
     // Menampilkan form untuk mengedit pengguna
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        return view('users.edit', compact('user'));
+        // $user = User::findOrFail($id);
+        // return view('users.edit', compact('user'));
     }
 
     // Mengupdate data pengguna
     public function update(Request $request, $id)
     {
+        $user = User::findOrFail($id);  // Mencari pengguna berdasarkan ID
+
         // Validasi input
-        $validator = Validator::make($request->all(), [
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'role' => 'required',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,bmp,gif,svg|max:10240', // Validasi image
             'status' => 'required'
         ]);
 
-        // jika validasinya gagal maka redirect ke form edit user
-        if ($validator->fails()) {
-            return redirect()->route('users.index', $id)
-                             ->withErrors($validator)
-                             ->withInput();
+        // Cek jika ada gambar baru yang di-upload
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($user->image && Storage::disk('public')->exists($user->image)) {
+                Storage::disk('public')->delete($user->image);
+            }
+
+            // Ambil file gambar yang di-upload
+            $image = $request->file('image');
+
+            // Mendapatkan ekstensi file
+            $extension = $image->getClientOriginalExtension();
+
+            // Membuat nama file unik dengan UUID dan ekstensi yang benar
+            $filename = Str::uuid() . '.' . $extension;
+
+            // Menyimpan file gambar di storage/public/img/users/
+            $image->storeAs('img/users', $filename, 'public');
+
+            // Menyimpan filename gambar yang baru
+            $imagePath = $filename;
+        } else {
+            // Jika tidak ada gambar yang di-upload, gunakan gambar lama
+            $imagePath = $user->image;
         }
 
-        $user = User::findOrFail($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->role = $request->role;
-        $user->status = $request->status;
-        
+        // Perbarui data pengguna
+        $user->update([
+            'name'  => $validated['name'],
+            'email' => $validated['email'],
+            'role'  => $validated['role'],
+            'image' => $imagePath,  // Update namafile baru atau lama
+            'status'=> $validated['status']
+        ]);
 
-        $user->save();
-
+        // Redirect ke halaman pengguna dengan pesan sukses
         return redirect()->route('users.index')->with('success', 'User updated successfully!');
     }
 
     // Menghapus pengguna
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        // $user = User::findOrFail($id);
+        // $user->delete();
+
+        // return redirect()->route('users.index')->with('success', 'User deleted successfully!');
+
+        $user = User::findOrFail($id);  // Mencari pengguna berdasarkan ID
+
+        // Hapus gambar pengguna jika ada di storage
+        if ($user->image && Storage::disk('public')->exists('img/users/' . $user->image)) {
+            Storage::disk('public')->delete('img/users/' . $user->image);
+        }
+
+        // Hapus data pengguna dari database
         $user->delete();
 
+        // Redirect ke halaman pengguna dengan pesan sukses
         return redirect()->route('users.index')->with('success', 'User deleted successfully!');
     }
 }

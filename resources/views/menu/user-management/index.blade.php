@@ -89,7 +89,15 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->role }}</td>
-                                    <td>{{ $user->image }}</td>
+                                    <td>
+                                        <!-- Jika gambarnya ada -->
+                                        @if ($user->image)
+                                            <img src="{{ URL::asset('storage/img/users/' . $user->image) }}" alt="{{ $user->image }}" style="width: 70px; height: 70px; object-fit: cover;">
+                                        <!-- kalo gada gambarnya dibuat static -->
+                                        @else
+                                            <img src="{{ URL::asset('storage/img/users/user_image.png') }}" alt="Default Image" style="width: 70px; height: 70px; object-fit: cover;">
+                                        @endif
+                                    </td>
                                     
                                     <td class="text-center">
                                         <span class="badge 
@@ -160,13 +168,13 @@
                                                         @enderror
                                                     </div>
 
-                                                    <!-- <div class="mb-3">
+                                                    <div class="mb-3">
                                                         <label for="image" class="form-label">Image</label>
                                                         <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*" value="{{ $user->image }}">
                                                         @error('image')
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
-                                                    </div> -->
+                                                    </div>
 
                                                     <div class="mb-3">
                                                         <label for="status" class="form-label">Status</label>
