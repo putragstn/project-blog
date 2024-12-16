@@ -48,6 +48,6 @@ class RegisteredUserController extends Controller
         // return redirect(route('user.dashboard', absolute: false));
 
         // Tidak login otomatis, hanya mengarahkan ke halaman login
-        return redirect()->route('login')->with('status', 'Registration successful! Please login to continue.');
+        return redirect()->route('login')->with('status', 'Registration successful! Await admin verification');
     }
 }
