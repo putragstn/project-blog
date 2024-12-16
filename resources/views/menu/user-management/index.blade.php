@@ -159,9 +159,9 @@
                                                                 $roles = $user->role;
                                                             @endphp
 
-                                                            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }} {{ $roles == 'user' ? 'selected' : '' }}>User</option>
-                                                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }} {{ $roles == 'admin' ? 'selected' : '' }}>Admin</option>
-                                                            <option value="superadmin" {{ old('role') == 'superadmin' ? 'selected' : '' }} {{ $roles == 'superadmin' ? 'selected' : '' }}>Superadmin</option>
+                                                            <option value="superadmin" {{ $roles == 'superadmin' ? 'selected' : '' }}>Superadmin</option>
+                                                            <option value="admin" {{ $roles == 'admin' ? 'selected' : '' }}>Admin</option>
+                                                            <option value="user" {{ $roles == 'user' ? 'selected' : '' }}>User</option>
                                                         </select>
                                                         @error('role')
                                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -179,13 +179,27 @@
                                                     <div class="mb-3">
                                                         <label for="status" class="form-label">Status</label>
                                                         <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
-                                                            @php
+                                                            {{-- @php
                                                                 $status = $user->status;
-                                                            @endphp
+                                                            @endphp --}}
 
-                                                            <option value="verified" {{ old('status') == 'verified' ? 'selected' : '' }} {{ $status == 'verified' ? 'selected' : '' }}>Verified</option>
-                                                            <option value="not_verified" {{ old('status') == 'not_verified' ? 'selected' : '' }} {{ $status == 'not_verified' ? 'selected' : '' }}>Not Verified</option>
-                                                            <option value="block" {{ old('status') == 'block' ? 'selected' : '' }} {{ $status == 'block' ? 'selected' : '' }}>Block</option>
+                                                            @if ($user->status == "verified")
+                                                                <option value="verified" selected>Verified</option>
+                                                                <option value="not_verified" >Not Verified</option>
+                                                                <option value="block" >Block</option>
+                                                            @elseif($user->status == "not_verified")
+                                                                <option value="verified">Verified</option>
+                                                                <option value="not_verified" selected>Not Verified</option>
+                                                                <option value="block">Block</option>
+                                                            @else
+                                                                <option value="verified">Verified</option>
+                                                                <option value="not_verified" >Not Verified</option>
+                                                                <option value="block" selected>Block</option>
+                                                            @endif
+
+                                                            {{-- <option value="verified" {{ $user->status == 'verified' ? 'selected' : '' }}>Verified</option>
+                                                            <option value="not_verified" {{ $user->status == 'not_verified' ? 'selected' : '' }}>Not Verified</option>
+                                                            <option value="block"  {{ $user->status == 'block' ? 'selected' : '' }}>Block</option> --}}
                                                         </select>
                                                         @error('status')
                                                             <div class="invalid-feedback">{{ $message }}</div>

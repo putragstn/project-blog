@@ -30,35 +30,35 @@ class DatabaseSeeder extends Seeder
             
             // superadmin
             [
-                'name'              => 'Superadmin',
-                'email'             => 'superadmin@gmail.com',
-                'email_verified_at' => now(),
-                'password'          => static::$password ??= Hash::make('password'),
-                'role'              => 'superadmin',
-                'remember_token'    => Str::random(10),
-                'status'            => 'verified',
-                'updated_at'        => now(),
-                'created_at'        => now()
+                'name'                  => 'Superadmin',
+                'email'                 => 'superadmin@gmail.com',
+                'account_verified_at'   => now(),
+                'password'              => static::$password ??= Hash::make('password'),
+                'role'                  => 'superadmin',
+                'remember_token'        => Str::random(10),
+                'status'                => 'verified',
+                'updated_at'            => now(),
+                'created_at'            => now()
             ],
             
             //admin
             [
-                'name'              => 'Admin',
-                'email'             => 'admin@gmail.com',
-                'email_verified_at' => now(),
-                'password'          => static::$password ??= Hash::make('password'),
-                'role'              => 'admin',
-                'remember_token'    => Str::random(10),
-                'status'            => 'verified',
-                'updated_at'        => now(),
-                'created_at'        => now()
+                'name'                  => 'Admin',
+                'email'                 => 'admin@gmail.com',
+                'account_verified_at'   => now(),
+                'password'              => static::$password ??= Hash::make('password'),
+                'role'                  => 'admin',
+                'remember_token'        => Str::random(10),
+                'status'                => 'verified',
+                'updated_at'            => now(),
+                'created_at'            => now()
             ],
 
             //user
             [
-                'name'              => 'User',
-                'email'             => 'user@gmail.com',
-                'email_verified_at' => now(),
+                'name'                  => 'User',
+                'email'                 => 'user@gmail.com',
+                'account_verified_at'   => now(),
                 'password'          => static::$password ??= Hash::make('password'),
                 'role'              => 'user',
                 'remember_token'    => Str::random(10),
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name'              => 'Test',
                 'email'             => 'test@gmail.com',
-                'email_verified_at' => now(),
+                'account_verified_at' => now(),
                 'password'          => static::$password ??= Hash::make('password'),
                 'role'              => 'user',
                 'remember_token'    => Str::random(10),
@@ -84,7 +84,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name'              => 'Block',
                 'email'             => 'block@gmail.com',
-                'email_verified_at' => now(),
+                'account_verified_at' => now(),
                 'password'          => static::$password ??= Hash::make('password'),
                 'role'              => 'user',
                 'remember_token'    => Str::random(10),

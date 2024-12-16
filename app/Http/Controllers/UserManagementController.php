@@ -108,7 +108,7 @@ class UserManagementController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'role' => 'required',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,bmp,gif,svg|max:10240', // Validasi image
-            'status' => 'required'
+            // 'status' => 'required'
         ]);
 
         // Cek jika ada gambar baru yang di-upload
@@ -137,13 +137,16 @@ class UserManagementController extends Controller
             $imagePath = $user->image;
         }
 
+        // dd($request->status);
+
         // Perbarui data pengguna
         $user->update([
             'name'  => $validated['name'],
             'email' => $validated['email'],
             'role'  => $validated['role'],
             'image' => $imagePath,  // Update namafile baru atau lama
-            'status'=> $validated['status']
+            // 'account_verified_at' => now(),
+            'status'=> $request->status
         ]);
 
         // Redirect ke halaman pengguna dengan pesan sukses
