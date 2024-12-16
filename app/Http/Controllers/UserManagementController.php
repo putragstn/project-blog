@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class UserManagementController extends Controller
 {
@@ -114,8 +115,8 @@ class UserManagementController extends Controller
         // Cek jika ada gambar baru yang di-upload
         if ($request->hasFile('image')) {
             // Hapus gambar lama jika ada
-            if ($user->image && Storage::disk('public')->exists($user->image)) {
-                Storage::disk('public')->delete($user->image);
+            if ($user->image && Storage::disk('public')->exists('img/users/' . $user->image)) {
+                Storage::disk('public')->delete('img/users/' . $user->image);
             }
 
             // Ambil file gambar yang di-upload
@@ -137,7 +138,13 @@ class UserManagementController extends Controller
             $imagePath = $user->image;
         }
 
-        // dd($request->status);
+        // jika status = verified maka kasih value pada account_verified_at
+        if ($request->status == "verified"){
+            $now = now();
+        } else {
+            $now = NULL;
+        }
+
 
         // Perbarui data pengguna
         $user->update([
@@ -145,7 +152,7 @@ class UserManagementController extends Controller
             'email' => $validated['email'],
             'role'  => $validated['role'],
             'image' => $imagePath,  // Update namafile baru atau lama
-            // 'account_verified_at' => now(),
+            'account_verified_at' => $now,
             'status'=> $request->status
         ]);
 

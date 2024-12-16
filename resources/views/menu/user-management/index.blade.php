@@ -78,6 +78,7 @@
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Image</th>
+                                    <th>Verified at</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -96,6 +97,12 @@
                                         <!-- kalo gada gambarnya dibuat static -->
                                         @else
                                             <img src="{{ URL::asset('storage/img/users/user_image.png') }}" alt="Default Image" style="width: 70px; height: 70px; object-fit: cover;">
+                                        @endif
+                                    </td>
+
+                                    <td>
+                                        @if($user->account_verified_at)
+                                            {{ \Carbon\Carbon::parse($user->account_verified_at)->timezone('Asia/Jakarta')->format('d-m-Y H:i:s') }} WIB
                                         @endif
                                     </td>
                                     
