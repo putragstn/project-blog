@@ -53,7 +53,7 @@ class AuthenticatedSessionController extends Controller
         if ($user->status === 'not_verified') {
             // Logout pengguna dan beri pesan jika statusnya 'not_verified'
             Auth::guard('web')->logout();
-            return redirect()->route('login')->with('status', 'Your account is not verified. Please check your email.');
+            return redirect()->route('login')->with('status', 'Your account is not verified. Please wait for admin verification.');
         }
 
 
