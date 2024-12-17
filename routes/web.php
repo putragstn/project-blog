@@ -3,9 +3,11 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AllPostsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Category;
 
@@ -29,26 +31,30 @@ Route::middleware('auth')->group(function () {
 // superadmin routes
 Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function () {
     Route::get('/superadmin/dashboard',[SuperadminController::class,'dashboard'])->name('superadmin.dashboard');
-    // Route::resource('/user-management', UserController::class);
-    // Route::resource('category', CategoryController::class);
 });
 
 
 Route::middleware(['auth', 'verified', 'role:superadmin,admin'])->group(function () {
     Route::resource('category', CategoryController::class); 
     Route::resource('users', UserManagementController::class); 
+    Route::resource('all-posts', AllPostsController::class);
 });
 
 
 // admin routes
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
-    // Route::resource('category', CategoryController::class); 
 });
 
 // user routes
 Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
     Route::get('/user/dashboard',[UserController::class,'dashboard'])->name('user.dashboard');
+});
+
+
+// my posts routes
+Route::middleware(['auth', 'verified', 'role:superadmin,admin,user'])->group(function () {
+    Route::resource('posts', PostController::class); 
 });
 
 

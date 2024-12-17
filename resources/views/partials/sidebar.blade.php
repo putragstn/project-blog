@@ -26,18 +26,18 @@ if (auth()->user()->role === "superadmin"){
                 </li>
                 @if (auth()->user()->role === "superadmin" || auth()->user()->role === "admin")
                     <li class="nav-item">
-                        <a href="{{ route('users.index') }}" class="nav-link {{ request()->is('users*') || request()->is('users*') || request()->is('user/dashboard*')  ? 'active' : '' }}"> <i class="nav-icon bi bi-people"></i>
+                        <a href="{{ route('users.index') }}" class="nav-link {{ request()->is('users*') || request()->is('user/dashboard*')  ? 'active' : '' }}"> <i class="nav-icon bi bi-people"></i>
                             <p>User Management</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link"> <i class="nav-icon bi bi-postcard"></i>
+                        <a href="{{ route('all-posts.index') }}" class="nav-link {{ request()->is('all-posts*') ? 'active' : '' }}"> <i class="nav-icon bi bi-postcard"></i>
                             <p>All Posts</p>
                         </a>
                     </li>
                 @endif
                 <li class="nav-item">
-                    <a href="#" class="nav-link"> <i class="nav-icon bi bi-file-post"></i>
+                    <a href="{{ route('posts.index') }}" class="nav-link {{ request()->is('post*') ? 'active' : '' }}"> <i class="nav-icon bi bi-file-post"></i>
                         <p>My Posts</p>
                     </a>
                 </li>
