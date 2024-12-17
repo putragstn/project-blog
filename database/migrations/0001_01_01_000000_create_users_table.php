@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->enum('role', ['superadmin', 'admin', 'user'])->default('user');
-            $table->string('image')->default('user_image.png')->nullable();
+            $table->string('image')->default('no_image.png')->nullable();
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
             $table->enum('status', ['block', 'not_verified', 'verified'])->default('not_verified');

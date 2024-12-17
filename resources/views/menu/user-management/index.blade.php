@@ -94,9 +94,9 @@
                                         <!-- Jika gambarnya ada -->
                                         @if ($user->image)
                                             <img src="{{ URL::asset('storage/img/users/' . $user->image) }}" alt="{{ $user->image }}" style="width: 70px; height: 70px; object-fit: cover;">
-                                        <!-- kalo gada gambarnya dibuat static -->
+                                        <!-- kalo gada gambarnya dibuat static pake no_image.png -->
                                         @else
-                                            <img src="{{ URL::asset('storage/img/users/user_image.png') }}" alt="Default Image" style="width: 70px; height: 70px; object-fit: cover;">
+                                            <img src="{{ URL::asset('storage/img/users/no_image.png') }}" alt="Default Image" style="width: 70px; height: 70px; object-fit: cover;">
                                         @endif
                                     </td>
 
