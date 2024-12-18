@@ -20,4 +20,16 @@ class Post extends Model
         'slug',
         'published_at'
     ];
+
+    // Relasi dengan User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Relasi dengan Category
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

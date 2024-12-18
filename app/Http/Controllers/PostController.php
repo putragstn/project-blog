@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+// use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -33,7 +35,36 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            // 'user_id' => 'required|exists:users,id',
+            'title' => 'required|string|max:255',
+            'subheading' => 'nullable|string',
+            'category_id' => 'nullable|exists:categories,id',
+            'content' => 'required|string',
+            // 'published_at' => 'nullable|date',
+        ]);
+
+        // membuat slug
+        $slug = Str::slug($request->title);
+
+        // Menangani duplikasi slug
+        $existingSlug = Post::where('slug', $slug)->first();
+        if ($existingSlug) {
+            // Jika slug sudah ada, tambahkan angka untuk membuat slug unik
+            $slug = $slug . '-' . (Post::where('slug', 'like', $slug.'%')->count() + 1);
+        }
+
+        Post::create([
+            'user_id'       => auth()->user()->id,
+            'category_id'   => $request->category_id,
+            'title'         => $request->title,
+            'subheading'    => $request->subheading,
+            'content'       => $request->content,
+            'slug'          => $slug,
+            'published_at'  => now()
+        ]);
+
+        return redirect()->route('posts.index')->with('success', 'Post berhasil dibuat!');
     }
 
     /**

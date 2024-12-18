@@ -71,45 +71,50 @@
                                 @enderror
                             </div>
         
-                            <div class="mb-3">
-                                <label for="content" class="form-label">Content</label>
-                                <input type="text" name="content" id="content" class="form-control @error('content') is-invalid @enderror" value="{{ old('content') }}" required>
-                                @error('content')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-        
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="slug" class="form-label">Slug</label>
                                 <input type="text" name="slug" id="slug" class="form-control @error('slug') is-invalid @enderror" value="{{ old('slug') }}" required>
                                 @error('slug')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
         
                             <div class="mb-3">
                                 <label for="category_id" class="form-label">Category</label>
                                 <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" name="category_id" required>
                                     {{-- <option value="user" {{ old('category_id') == 'user' ? 'selected' : '' }}>User</option> --}}
-                                    <option value="user">User</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->categories_name }}</option>
+                                    @endforeach
                                 </select>
                                 @error('category_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
         
-        
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="image" class="form-label">Image</label>
                                 <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                            </div> --}}
+
+                            {{-- Text Editor Summernote --}}
+                            <div class="mb-3">
+                                <label for="summernote" class="form-label">Content</label>
+                                {{-- <input type="text" name="content" id="summernote" class="form-control @error('content') is-invalid @enderror" value="{{ old('content') }}" required> --}}
+                                <textarea id="summernote" name="content" class="form-control @error('content') is-invalid @enderror">{{ old('content') }}</textarea>
+
+                                @error('content')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
-
                         </div> <!--end::Body--> <!--begin::Footer-->
-                        <div class="card-footer"> <button type="submit" class="btn btn-primary">Submit</button> </div> <!--end::Footer-->
+                        <div class="card-footer"> 
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div> <!--end::Footer-->
                     </form> <!--end::Form-->
 
                 </div> <!--end::Quick Example--> <!--begin::Input Group-->
@@ -118,80 +123,6 @@
     </div>
 </div>
 <!-- End of Table User -->
-
-
-<!-- Modal for adding new user -->
-<div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addPostModalLabel">Add New Post</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" required>
-                        @error('title')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="subheading" class="form-label">Subheading</label>
-                        <input type="text" name="subheading" id="subheading" class="form-control @error('subheading') is-invalid @enderror" value="{{ old('subheading') }}" required>
-                        @error('subheading')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="content" class="form-label">Content</label>
-                        <input type="text" name="content" id="content" class="form-control @error('content') is-invalid @enderror" value="{{ old('content') }}" required>
-                        @error('content')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="slug" class="form-label">Slug</label>
-                        <input type="text" name="slug" id="slug" class="form-control @error('slug') is-invalid @enderror" value="{{ old('slug') }}" required>
-                        @error('slug')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="category_id" class="form-label">category_id</label>
-                        <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" name="category_id" required>
-                            {{-- <option value="user" {{ old('category_id') == 'user' ? 'selected' : '' }}>User</option> --}}
-                            <option value="user">User</option>
-                        </select>
-                        @error('category_id')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Image</label>
-                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
-                        @error('image')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Post</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 
 @endsection

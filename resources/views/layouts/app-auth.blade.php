@@ -16,8 +16,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous"><!-- jsvectormap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
 
+    {{-- jQuery --}}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     {{-- Summernote --}}
-    
+    <!-- include summernote css/js-->
+    <link href="{{ URL::asset('summernote/summernote-bs5.css') }}" rel="stylesheet">
+    <script src="{{ URL::asset('summernote/summernote-bs5.js') }}"></script>
 
 </head> <!--end::Head--> <!--begin::Body-->
 
@@ -39,8 +44,8 @@
         @include('partials.footer')
     </div> <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
 
+
     <!-- include libraries(jQuery, bootstrap) -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script> <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I=" crossorigin="anonymous"></script> <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
 
@@ -257,6 +262,23 @@
         );
         sparkline3.render();
     </script> <!--end::Script-->
+
+    {{-- Summernote --}}
+    {{-- <script>
+        $('#summernote').summernote({
+          placeholder: 'Hello Bootstrap 5',
+          tabsize: 2,
+          height: 100
+        });
+    </script> --}}
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                height: 300
+            });
+        });
+    </script>
+    
 </body><!--end::Body-->
 
 </html>
