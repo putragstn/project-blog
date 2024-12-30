@@ -19,4 +19,11 @@ class Category extends Model
 
     // Tentukan kolom yang tidak bisa diisi jika diperlukan
     // protected $guarded = ['id']; // Jika hanya kolom id yang tidak bisa diisi
+
+
+    // Relasi dengan Post
+    public function post()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

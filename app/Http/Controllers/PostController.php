@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with('category', 'user')->get();
         $title = "Post";
         return view('menu.post.index', compact('posts', 'title'));
     }

@@ -73,25 +73,67 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Image</th>
+                                    <th>Author</th>
                                     <th>Title</th>
-                                    <th>Subheading</th>
-                                    <th>Content</th>
-                                    <th>Slug</th>
+                                    <th>Category</th>
                                     <th>Published at</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                
+                                @foreach ($posts as $post)
                                 <tr class="align-middle">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $post->user->name }}</td>
+                                    <td>{{ $post->title }}</td>
+                                    <td>{{ $post->category->categories_name }}</td>
+                                    <td>{{ $post->published_at }}</td>
+                                    <td class="text-center">
+
+                                        {{-- Button untuk Preview Post --}}
+                                        <a class="btn badge text-bg-dark" href="{{ route('posts.show', $post->id) }}">
+                                            <i class="bi bi-eye"></i></span>
+                                        </a>
+
+                                        {{-- Button untuk membuka  Edit --}}
+                                        <a class="btn badge text-bg-primary" href="{{ route('posts.edit', $post->id) }}">
+                                            <i class="bi bi-pencil"></i></span>
+                                        </a>
+
+                                        {{-- Tombol Delete hanya muncul untuk role superadmin & admin --}}
+                                        {{-- Tombol Delete yang memunculkan Modal Konfirmasi --}}
+                                        @if (auth()->user()->role === "superadmin" | auth()->user()->role === "admin")
+                                            <button class="btn badge text-bg-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $post->id }}">
+                                                <i class="bi bi-trash"></i></span>
+                                            </button>
+                                        @endif
+                                    </td>
                                 </tr>
+
+                                <!-- Modal Delete (Konfirmasi) -->
+                                <div class="modal fade" id="deleteModal{{ $post->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $post->id }}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteModalLabel{{ $post->id }}">Delete post</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to delete the post <strong>{{ $post->name }}</strong>?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
 
                             </tbody>
                         </table>

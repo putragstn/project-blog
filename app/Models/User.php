@@ -49,4 +49,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Relasi dengan user
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
+
+    // Relasi dengan Post
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 }
