@@ -12,9 +12,9 @@ class AllPostsController extends Controller
      */
     public function index()
     {
-        $allPosts = Post::all();
-        $title = "All Posts";
-        return view('menu.all-posts.index', compact('allPosts', 'title'));
+        $posts = Post::with('category', 'user')->get();
+        $title = "All Post";
+        return view('menu.all-posts.index', compact('posts', 'title'));
     }
 
     /**

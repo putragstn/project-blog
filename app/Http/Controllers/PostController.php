@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('category', 'user')->get();
+        $posts = Post::with('category', 'user')->where('user_id', auth()->user()->id)->get();
         $title = "Post";
         return view('menu.post.index', compact('posts', 'title'));
     }
@@ -80,7 +80,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $categories = Category::all();
+        // $posts = Post::with('category' ,'user')->where('user_id', $post->id)->get();
+        $title = "Edit Post";
+        return view('menu.post.edit', compact('post', 'categories', 'title'));
     }
 
     /**
@@ -88,7 +91,34 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'subheading' => 'nullable|string',
+            'category_id' => 'exists:categories,id',
+            'content' => 'required|string',
+        ]);
+
+        // membuat slug
+        $slug = Str::slug($request->title);
+
+        // Menangani duplikasi slug
+        $existingSlug = Post::where('slug', $slug)->first();
+        if ($existingSlug) {
+            // Jika slug sudah ada, tambahkan angka untuk membuat slug unik
+            $slug = $slug . '-' . (Post::where('slug', 'like', $slug.'%')->count() + 1);
+        }
+
+        // $post->update([
+        //     'title'         => $request->title,
+        //     'subheading'    => $request->subheading,
+        //     'category_id'   => $request->category_id,
+        //     'content'       => $request->content,
+        // ]);
+
+        $post->update(array_merge($validated, ['slug' => $slug]));
+        // $post->update($validated);
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
     }
 
     /**
@@ -96,6 +126,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');
     }
 }

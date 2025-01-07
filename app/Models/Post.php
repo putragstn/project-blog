@@ -10,16 +10,18 @@ class Post extends Model
     // protected $table = 'my_categories'; 
 
     // Tentukan kolom-kolom yang bisa diisi
-    protected $fillable = [
-        'user_id',
-        'category_id',
-        'title',
-        'subheading',
-        'content',
-        'image',
-        'slug',
-        'published_at'
-    ];
+    // protected $fillable = [
+    //     'user_id',
+    //     'category_id',
+    //     'title',
+    //     'subheading',
+    //     'content',
+    //     'image',
+    //     'slug',
+    //     'published_at'
+    // ];
+
+    protected $guarded = ['id'];
 
     // Relasi dengan User
     public function user()
