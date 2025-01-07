@@ -93,12 +93,12 @@
 
                                         {{-- Button untuk Preview Post --}}
                                         <a class="btn badge text-bg-dark" href="{{ route('posts.show', $post->id) }}">
-                                            <i class="bi bi-eye"></i></span>
+                                            <i class="bi bi-eye"></i>
                                         </a>
 
                                         {{-- Button untuk membuka  Edit --}}
                                         <a class="btn badge text-bg-primary" href="{{ route('posts.edit', $post->id) }}">
-                                            <i class="bi bi-pencil"></i></span>
+                                            <i class="bi bi-pencil"></i>
                                         </a>
 
                                         {{-- Tombol Delete hanya muncul untuk role superadmin & admin --}}

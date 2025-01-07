@@ -7,6 +7,7 @@ use App\Models\Post;
 // use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class PostController extends Controller
 {
@@ -72,7 +73,17 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        $title = "Preview Post";
+        $categories = Category::all();
+
+        $months = collect();
+
+        // Mulai dari bulan sekarang dan mundur 12 bulan
+        for ($i = 0; $i < 12; $i++) {
+            $months->push(Carbon::now()->subMonths($i)->format('F Y'));
+        }
+
+        return view('menu.post.show', compact('post', 'categories', 'title', 'months'));
     }
 
     /**

@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>AdminLTE v4 | {{ $title }}</title><!--begin::Primary Meta Tags-->
+    <title>ALTE v4 | {{ $title }}</title><!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="title" content="AdminLTE v4 | Dashboard">
     <meta name="author" content="ColorlibHQ">
@@ -274,7 +274,7 @@
     <script>
         $(document).ready(function() {
             $('#summernote').summernote({
-                height: 300
+                height: 450
             });
         });
     </script>
