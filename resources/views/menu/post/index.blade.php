@@ -101,13 +101,10 @@
                                             <i class="bi bi-pencil"></i>
                                         </a>
 
-                                        {{-- Tombol Delete hanya muncul untuk role superadmin & admin --}}
                                         {{-- Tombol Delete yang memunculkan Modal Konfirmasi --}}
-                                        @if (auth()->user()->role === "superadmin" | auth()->user()->role === "admin")
-                                            <button class="btn badge text-bg-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $post->id }}">
-                                                <i class="bi bi-trash"></i></span>
-                                            </button>
-                                        @endif
+                                        <button class="btn badge text-bg-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $post->id }}">
+                                            <i class="bi bi-trash"></i></span>
+                                        </button>
                                     </td>
                                 </tr>
 
