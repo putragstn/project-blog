@@ -19,9 +19,13 @@
     {{-- Bootstrap Icon version 1.11.0 --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css" integrity="sha256-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+
     {{-- AdminLTE 4 - CSS --}}
     <link rel="stylesheet" href="{{ URL::asset('adminlte-4/css/adminlte.css') }}">
 
+    {{-- Datatables Bootstrap 5 - CSS --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.0/css/dataTables.bootstrap5.css">
 
     {{-- jQuery version 3.7.1 --}}
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -66,6 +70,12 @@
     {{-- AdminLTE 4 - jS --}}
     <script src="{{ URL::asset('adminlte-4/js/adminlte.js') }}"></script>
 
+    {{-- Datatables JS --}}
+    <script src="https://cdn.datatables.net/2.2.0/js/dataTables.js"></script>
+
+    {{-- Datatables Bootstrap 5 - JS --}}
+    <script src="https://cdn.datatables.net/2.2.0/js/dataTables.bootstrap5.js"></script>
+
     {{-- Sidebar Wrapper - JS --}}
     <script>
         const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
@@ -90,7 +100,7 @@
             }
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js" integrity="sha256-ipiJrswvAR4VAx/th+6zWsdeYmVae0iJuiR+6OqHJHQ=" crossorigin="anonymous"></script> <!-- sortablejs -->
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js" integrity="sha256-ipiJrswvAR4VAx/th+6zWsdeYmVae0iJuiR+6OqHJHQ=" crossorigin="anonymous"></script> <!-- sortablejs --> --}}
 
     {{-- Summernote --}}
     <script>
@@ -98,6 +108,14 @@
             $('#summernote').summernote({
                 height: 450
             });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                // responsive: true;  // Mengaktifkan mode responsif
+            });  // Mengaktifkan DataTables pada tabel dengan ID 'example'
         });
     </script>
     

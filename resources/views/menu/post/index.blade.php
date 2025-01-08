@@ -44,7 +44,7 @@
 <div class="app-content"> <!--begin::Container-->
     <div class="container-fluid"> <!--begin::Row-->
         {{-- <button class="btn btn-sm btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#addPostModal">New Post<i class="bi bi-plus"></i></button> --}}
-        <a href="{{ route('posts.create') }}" class="btn btn-sm btn-primary mb-1">New Post<i class="bi bi-plus"></i></a>
+        <a href="{{ route('posts.create') }}" class="btn btn-sm btn-primary mb-2">New Post<i class="bi bi-plus ms-1"></i></a>
     </div>
 </div>
 
@@ -58,25 +58,16 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h3 class="card-title">Posts Table</h3>
-                        <div class="card-tools">
-                            <ul class="pagination pagination-sm float-end">
-                                <li class="page-item"> <a class="page-link" href="#">&laquo;</a> </li>
-                                <li class="page-item"> <a class="page-link" href="#">1</a> </li>
-                                <li class="page-item"> <a class="page-link" href="#">2</a> </li>
-                                <li class="page-item"> <a class="page-link" href="#">3</a> </li>
-                                <li class="page-item"> <a class="page-link" href="#">&raquo;</a> </li>
-                            </ul>
-                        </div>
-                    </div> <!-- /.card-header -->
-                    <div class="card-body p-0">
-                        <table class="table">
+                    </div>
+                    <div class="card-body p-3">
+                        <table class="table table-responsive-sm table-hover nowrap" id="example">
                             <thead>
                                 <tr>
-                                    <th style="width: 10px">#</th>
+                                    <th width=10 class="text-center">#</th>
                                     <th>Author</th>
                                     <th>Title</th>
                                     <th>Category</th>
-                                    <th>Published at</th>
+                                    <th class="text-center">Published at</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -84,11 +75,11 @@
                                 
                                 @foreach ($posts as $post)
                                 <tr class="align-middle">
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $post->user->name }}</td>
                                     <td>{{ $post->title }}</td>
                                     <td>{{ $post->category->categories_name }}</td>
-                                    <td>{{ $post->published_at }}</td>
+                                    <td class="text-center">{{ $post->published_at }}</td>
                                     <td class="text-center">
 
                                         {{-- Button untuk Preview Post --}}
